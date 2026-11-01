@@ -49,6 +49,9 @@ COPY qoder_proxy.py qoder_accounts.py qoder_catalog.py qoder_fingerprint.py \
 # Local dashboard overrides (read per request; optional, may be empty)
 COPY ui ./ui
 
+# Locale packs (read per request; the folder listing is the registry)
+COPY i18n ./i18n
+
 # 官方模型目录快照（运行时优先读取；缺失会回退 qoder_catalog.py 内嵌冻结副本）
 COPY qoder_catalog_intl.json qoder_catalog_cn.json ./
 

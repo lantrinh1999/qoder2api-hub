@@ -408,4 +408,19 @@ def test_section_one_only_has_variable_blocks():
 test_section_three_has_no_layout_properties()
 test_section_one_only_has_variable_blocks()
 
+def test_dockerfile_ships_ui_and_i18n():
+    dockerfile = io.open(os.path.join(ROOT, "Dockerfile"), encoding="utf-8").read()
+    ignore_path = os.path.join(ROOT, ".dockerignore")
+    ignored = io.open(ignore_path, encoding="utf-8").read() if os.path.exists(ignore_path) else ""
+    patterns = [line.strip().rstrip("/") for line in ignored.splitlines()
+                if line.strip() and not line.strip().startswith("#")]
+    excluded = [name for name in ("ui", "i18n") if name in patterns]
+    check("Dockerfile copies ui/ and i18n/ and .dockerignore keeps both",
+          bool(re.search(r"^COPY ui ", dockerfile, re.M))
+          and bool(re.search(r"^COPY i18n ", dockerfile, re.M))
+          and not excluded, (excluded, patterns))
+
+
+test_dockerfile_ships_ui_and_i18n()
+
 finish()
