@@ -23,6 +23,12 @@
 | `baseprompt.json` | 官方推理请求体模板 |
 | `dashboard.html` | 单文件 Web 看板 |
 
+### UI overrides
+
+`ui/override.css` is injected into the dashboard `<head>` at request time.
+Edit it instead of `dashboard.html`; missing or empty keeps the stock panel.
+Changes apply on the next request, with no restart.
+
 ## 测试
 
 测试全部使用标准库，前端测试需要 Node.js（没有 Node.js 时自动跳过）。

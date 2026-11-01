@@ -414,6 +414,32 @@ USAGE_LOG = os.path.join(USAGE_DIR, "usage.jsonl")
 USAGE_SUMMARY = os.path.join(USAGE_DIR, "usage-summary.json")
 DASHBOARD_HTML = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                               "dashboard.html")
+# Optional local stylesheet: injected into the dashboard head on every request,
+# so the panel can be restyled without editing dashboard.html.
+UI_OVERRIDE_CSS = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               "ui", "override.css")
+
+
+def _inject_override_css(body):
+    """Insert ui/override.css before the first </head> of the dashboard body.
+
+    The file is read per request, so edits apply without a restart. A missing,
+    empty or unreadable file, or a body without </head>, serves the body as-is:
+    the dashboard must never fail because of styling.
+    """
+    try:
+        with open(UI_OVERRIDE_CSS, "rb") as fh:
+            css = fh.read()
+    except OSError:
+        return body
+    if not css or b"</head>" not in body:
+        return body
+    # A literal </style inside the css would close the block early.
+    css = re.sub(rb"(?i)</style", rb"<\\/style", css)
+    block = b'<style id="qd-override">' + css + b"</style>"
+    return body.replace(b"</head>", block + b"</head>", 1)
+
+
 # Locale packs are plain JSON files dropped into i18n/: the folder listing *is* the
 # registry, so adding a language never touches code and never needs a restart.
 I18N_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "i18n")
@@ -10380,6 +10406,7 @@ class Handler(BaseHTTPRequestHandler):
                 body = fh.read()
         except Exception as exc:
             return self._error(500, "dashboard.html unavailable: %s" % exc)
+        body = _inject_override_css(body)
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))

@@ -1,0 +1,422 @@
+/* Local dashboard overrides. Injected into the panel <head> on every request;
+   leave it empty to keep the stock dashboard. */
+
+/* 1. design tokens */
+:root{
+  --bg:#f6f7fa;
+  --panel:#ffffff;
+  --panel2:#f0f3f7;
+  --panel3:#e2e7ee;
+  --line:#e2e7ee;
+  --line-hover:#c7d0dd;
+  --fg:#101828;
+  --dim:#556070;
+  --dim-light:#657183;
+  --accent:#1d5ad4;
+  --accent-hover:#174bb5;
+  --accent-soft:rgba(29,90,212,.10);
+  --accent2:#12805c;
+  --accent2-soft:rgba(18,128,92,.12);
+  --warn:#b45309;
+  --warn-soft:rgba(180,83,9,.10);
+  --think:#6d3fd1;
+  --think-soft:rgba(109,63,209,.10);
+  --bad:#c53030;
+  --bad-soft:rgba(197,48,48,.10);
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05);
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 12px -8px rgba(16,24,40,.18);
+  --shadow-md:0 12px 28px -18px rgba(16,24,40,.30);
+  --header-bg:rgba(255,255,255,.88);
+  --ring:0 0 0 3px rgba(29,90,212,.24);
+  --radius-sm:8px;
+  --radius:10px;
+  --radius-lg:14px;
+  --qd-radius-sm:8px;
+  --qd-radius:12px;
+  --qd-radius-lg:14px;
+  --qd-shadow-1:0 1px 2px rgba(16,24,40,.05);
+  --qd-shadow-2:0 10px 26px -18px rgba(16,24,40,.32);
+  --qd-shadow-3:0 24px 48px -24px rgba(16,24,40,.42);
+  --qd-focus:0 0 0 3px rgba(29,90,212,.24);
+  --qd-mask:rgba(11,16,25,.52);
+  --qd-select:rgba(29,90,212,.22);
+  --qd-accent-line:rgba(29,90,212,.28);
+  --qd-ok-line:rgba(18,128,92,.30);
+  --qd-warn-line:rgba(180,83,9,.30);
+  --qd-bad-line:rgba(197,48,48,.28);
+  --qd-think-line:rgba(109,63,209,.28);
+  --qd-cn:#a9440b;
+  --qd-cn-soft:rgba(169,68,11,.12);
+  --qd-cn-line:rgba(169,68,11,.30);
+}
+[data-theme="dark"]{
+  --bg:#0b1019;
+  --panel:#121823;
+  --panel2:#19212e;
+  --panel3:#263243;
+  --line:#232d3d;
+  --line-hover:#3a4962;
+  --fg:#e9eef6;
+  --dim:#a3aec0;
+  --dim-light:#8290a3;
+  --accent:#6ba1ff;
+  --accent-hover:#8bb8ff;
+  --accent-soft:rgba(107,161,255,.16);
+  --accent2:#3ecf8e;
+  --accent2-soft:rgba(62,207,142,.16);
+  --warn:#f2b74b;
+  --warn-soft:rgba(242,183,75,.14);
+  --think:#b79cff;
+  --think-soft:rgba(183,156,255,.14);
+  --bad:#ff7b72;
+  --bad-soft:rgba(255,123,114,.14);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.40);
+  --shadow:0 1px 2px rgba(0,0,0,.40),0 6px 16px -10px rgba(0,0,0,.50);
+  --shadow-md:0 14px 32px -20px rgba(0,0,0,.75);
+  --header-bg:rgba(11,16,25,.88);
+  --ring:0 0 0 3px rgba(107,161,255,.32);
+  --qd-shadow-1:0 1px 2px rgba(0,0,0,.45);
+  --qd-shadow-2:0 12px 30px -18px rgba(0,0,0,.80);
+  --qd-shadow-3:0 28px 56px -28px rgba(0,0,0,.90);
+  --qd-focus:0 0 0 3px rgba(107,161,255,.32);
+  --qd-mask:rgba(0,0,0,.70);
+  --qd-select:rgba(107,161,255,.30);
+  --qd-accent-line:rgba(107,161,255,.34);
+  --qd-ok-line:rgba(62,207,142,.32);
+  --qd-warn-line:rgba(242,183,75,.32);
+  --qd-bad-line:rgba(255,123,114,.34);
+  --qd-think-line:rgba(183,156,255,.32);
+  --qd-cn:#f5a26f;
+  --qd-cn-soft:rgba(245,162,111,.14);
+  --qd-cn-line:rgba(245,162,111,.30);
+}
+
+/* 2. mobile layout */
+
+/* Header and main nav: the title stays on one line and the tab bar becomes
+   a single scrollable pill row. */
+@media (max-width:860px){
+  body>header{padding:10px 12px;gap:8px}
+  .header-left{flex:1 1 100%;min-width:0}
+  header h1{font-size:15px;white-space:nowrap}
+  .main-nav{
+    flex:1 1 200px;
+    min-width:0;
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav-btn{
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    white-space:nowrap;
+    min-height:40px;
+    padding:8px 12px;
+  }
+  .header-right{flex:1 1 100%;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+  .header-right .meta{flex:1 1 100%;width:auto;text-align:left;font-size:11px}
+  .header-right .theme-btn{width:40px;height:40px}
+  main{padding:14px 12px 48px}
+  section{padding:14px 12px;border-radius:12px}
+  .main-page.page-nav-on>section{scroll-margin-top:112px}
+  .page-nav{scrollbar-width:none}
+  .page-nav::-webkit-scrollbar{display:none}
+  .page-nav-item,button.page-nav-top{min-height:40px;padding:8px 12px}
+}
+
+/* Toolbars, cards and filters. */
+@media (max-width:860px){
+  .toolbar{gap:8px}
+  button:not(.main-nav-btn):not(.seg button):not(.page-nav-item):not(.range-btn){
+    min-height:40px;
+  }
+  .range-btn,.seg button{min-height:40px}
+  .acct-search{flex:1 1 100%}
+  .acct-search input{width:100%}
+  .key-card{padding:14px}
+  .key-action-btn{padding:8px 14px}
+  .realm-card{min-height:0;padding:12px 14px}
+  .acct-realms{grid-template-columns:minmax(0,1fr)}
+  .insight-hero{padding:14px}
+  .insight-card{padding:14px}
+  .stat-head{padding:12px;gap:8px}
+  .stat-head-title{flex-wrap:wrap}
+  .stat-head-ctrl{width:100%;justify-content:space-between;gap:8px}
+  .seg{max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .seg::-webkit-scrollbar{display:none}
+  .seg button{flex:0 0 auto;white-space:nowrap}
+  .stat-dates{flex-wrap:wrap;gap:6px}
+  .date-field input{width:118px}
+  .stat-panel{padding:12px}
+  .cache-card{padding:12px}
+  #schedulerBar>div{min-width:0}
+  #schedulerBar>div:first-child{flex:1 1 100%;flex-wrap:wrap}
+  #schedTimes{flex:1 1 100%;line-height:1.5}
+  #schedulerBar>div:nth-child(2){width:100%;justify-content:flex-start}
+}
+
+/* Charts and legends scroll inside their own box, never the page. */
+@media (max-width:860px){
+  .chart-legend{gap:8px 12px}
+  .chart-legend .note{margin-left:0;flex-basis:100%}
+  .daily-chart-wrap{max-width:100%;overflow-x:auto}
+  .daily-cols{padding:0 30px 0 4px}
+  .daily-legend{gap:4px 10px}
+  .legend{gap:8px;font-size:11px}
+  .stat-tip{max-width:calc(100vw - 24px);white-space:normal}
+}
+
+/* Tables scroll in their existing wrapper; unwrapped settings tables become
+   their own scroller so no cell can widen the page. */
+@media (max-width:860px){
+  .table-wrap{border-radius:8px}
+  .table-wrap table{min-width:560px}
+  table{font-size:12px}
+  table th,table td{padding:7px 9px}
+  #pageSettings section>table{display:block;max-width:100%;overflow-x:auto;
+    -webkit-overflow-scrolling:touch}
+}
+
+/* Coarse pointers: every control gets a 40px tap target and 16px form text
+   (16px stops iOS Safari from zooming the page on focus). */
+@media (max-width:860px) and (pointer:coarse){
+  button:not(.main-nav-btn):not(.seg button):not(.page-nav-item):not(.range-btn),
+  .main-nav-btn,.range-btn,.seg button,.page-nav-item,button.page-nav-top{
+    min-height:40px;
+  }
+  .modal-x{min-width:40px;min-height:40px}
+  .acct-search input,textarea,select,
+  input[type=text],input[type=search],input[type=password],input[type=number],
+  input[type=date]{font-size:16px}
+}
+
+/* Modals: near full-screen sheets with a fixed header and footer; only the
+   body scrolls, and the footer stays clear of the home indicator. */
+@media (max-width:640px){
+  .modal-mask{padding:6px}
+  .modal{
+    width:100%!important; /* beats inline style */
+    max-width:100%;
+    max-height:calc(100vh - 12px);
+    max-height:calc(100dvh - 12px);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    border-radius:12px;
+  }
+  .modal-hd{flex:0 0 auto;padding:12px 14px}
+  .modal-hd h2{font-size:14px;line-height:1.35;padding-right:8px}
+  .modal-x{min-width:40px;min-height:40px;font-size:24px;padding:0}
+  .modal-bd{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    padding:14px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .modal-bd table{display:block;max-width:100%;overflow-x:auto}
+  .modal-ft{
+    flex:0 0 auto;
+    flex-wrap:wrap;
+    padding:10px 14px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  }
+  .modal-ft button{flex:1 1 auto}
+  .login-link{font-size:11px}
+  .hint,.step .t{font-size:12px}
+  input[type=text],input[type=search],input[type=password],input[type=number],
+  input[type=date],select,textarea{font-size:16px!important; /* beats inline style */
+    min-height:40px}
+  .date-field input{width:132px}
+  .menu-pop{right:0;left:auto;min-width:150px;max-width:calc(100vw - 16px)}
+  .theme-dropdown{max-width:calc(100vw - 16px)}
+  .mono{overflow-wrap:anywhere}
+}
+
+/* Cards and charts: two columns, then one on the narrowest phones. */
+@media (max-width:640px){
+  .stat-grid2{gap:10px}
+  .stat-kpis{gap:8px}
+  .cards{gap:8px}
+  .card,#cards .card{padding:10px 12px}
+  .card .v{font-size:20px}
+  .table-wrap table{min-width:480px}
+  .insight-detail{max-width:200px;white-space:normal;overflow:visible;
+    text-overflow:clip}
+  .daily-cols{height:180px}
+  .insight-block{margin-top:14px}
+}
+
+/* Narrowest phones: one card per row, smaller segment labels. */
+@media (max-width:380px){
+  #cards,.stat-kpis,.cache-cards,.cards{grid-template-columns:minmax(0,1fr)!important} /* beats inline style */
+  .seg button{padding:6px 10px;font-size:11px}
+  .badge{font-size:10px}
+}
+
+/* 3. visual polish */
+/* Surfaces: neutral panels with a soft, consistent depth. */
+body>header{background-color:var(--header-bg);border-color:var(--line);box-shadow:var(--qd-shadow-1);}
+.card,#cards .card,section,.stat-panel,.realm-card,.stat-kpi,.insight-card,.cache-card,.key-card{
+  border-color:var(--line);
+  box-shadow:var(--qd-shadow-1);
+}
+.card,#cards .card,.stat-panel,.realm-card,.stat-kpi,.insight-card,.cache-card,.key-card{border-radius:var(--qd-radius);}
+.card:hover,#cards .card:hover,.stat-panel:hover,.realm-card:hover,.stat-kpi:hover, .insight-card:hover,.cache-card:hover,.key-card:hover{
+  border-color:var(--line-hover);
+  box-shadow:var(--qd-shadow-2);
+}
+
+/* Headings: calmer weight, tighter display rhythm, quieter small caps. */
+h1,h2,h3,h4{letter-spacing:-.015em;}
+h1{font-weight:700;}
+section>h2{font-weight:600;letter-spacing:.055em;text-transform:uppercase;}
+.stat-panel>header h2{font-weight:600;letter-spacing:-.01em;text-transform:none;}
+
+/* Navigation: one quiet selected pill, accent rail for the page sidebar. */
+.main-nav{background-color:var(--panel2);border-color:var(--line);}
+.main-nav-btn{color:var(--dim);border-radius:var(--qd-radius-sm);transition:background-color .14s ease,color .14s ease,box-shadow .14s ease;}
+.main-nav-btn:hover{color:var(--fg);background-color:var(--panel);}
+.main-nav-btn.active{
+  color:var(--fg);
+  background-color:var(--panel);
+  border-color:var(--line);
+  box-shadow:inset 0 -2px 0 var(--accent),var(--qd-shadow-1);
+}
+[data-theme="dark"] .main-nav-btn.active{background-color:var(--panel2);box-shadow:inset 0 -2px 0 var(--accent),var(--qd-shadow-1);}
+.page-nav-item{color:var(--dim);border-radius:var(--qd-radius-sm);transition:background-color .14s ease,color .14s ease;}
+.page-nav-item:hover{color:var(--fg);background-color:var(--panel2);}
+.page-nav-item.active{color:var(--fg);background-color:var(--panel2);box-shadow:inset 2px 0 0 var(--accent);}
+
+/* Buttons: clear default, primary and destructive states. */
+button{font-family:var(--font-ui);font-weight:500;transition:background-color .14s ease,border-color .14s ease, box-shadow .14s ease,color .14s ease;}
+button:not(.main-nav-btn):not(.seg button):not(.page-nav-item):not(.range-btn){
+  background-color:var(--panel);
+  border-color:var(--line);
+  color:var(--fg);
+  border-radius:var(--qd-radius-sm);
+  box-shadow:var(--qd-shadow-1);
+}
+button:not(.main-nav-btn):not(.seg button):not(.page-nav-item):not(.range-btn):hover:not(:disabled){
+  background-color:var(--panel2);
+  border-color:var(--line-hover);
+  box-shadow:var(--qd-shadow-2);
+}
+button:not(.main-nav-btn):not(.seg button):not(.page-nav-item):not(.range-btn):active:not(:disabled){
+  background-color:var(--panel3);
+  box-shadow:var(--qd-shadow-1);
+}
+button.primary{border-color:transparent;color:#fff;box-shadow:0 6px 18px -12px var(--accent);}
+button.sec{background-color:var(--panel);border-color:var(--line);color:var(--fg);}
+button.sec:hover{background-color:var(--panel2);border-color:var(--line-hover);}
+button.danger,.key-action-btn.danger{color:var(--bad);background-color:var(--bad-soft);border-color:var(--qd-bad-line);}
+button.danger:hover,.key-action-btn.danger:hover{color:#fff;background-color:var(--bad);border-color:var(--bad);}
+button:disabled{opacity:.5;cursor:not-allowed;}
+.toggle-realm-btn{color:var(--accent);background-color:var(--accent-soft);border-color:var(--qd-accent-line);}
+.theme-btn{color:var(--dim);background-color:var(--panel);border-color:var(--line);}
+.theme-btn:hover{color:var(--fg);background-color:var(--panel2);border-color:var(--line-hover);}
+.theme-option{color:var(--fg);}
+.theme-option:hover{background-color:var(--panel2);}
+.theme-option.active{color:var(--accent);}
+
+/* Segmented filters and range switches. */
+.seg{background-color:var(--panel2);border-color:var(--line);}
+.seg button{color:var(--dim);}
+.seg button.active{color:#fff;}
+.seg-pill{background-color:var(--accent);box-shadow:0 2px 10px var(--accent-soft);}
+.range-btn{color:var(--dim);}
+.range-btn:hover{color:var(--fg);background-color:var(--panel2);}
+.range-btn.active,.range-btn.active:hover{color:#fff;background-color:var(--accent);box-shadow:var(--qd-shadow-1);}
+
+/* Form controls: calm borders, accent focus ring, visible caret. */
+input[type=text],input[type=search],input[type=password],input[type=number],input[type=date], select,textarea{
+  background-color:var(--panel);
+  border-color:var(--line);
+  color:var(--fg);
+  caret-color:var(--accent);
+  accent-color:var(--accent);
+  transition:border-color .14s ease,box-shadow .14s ease;
+}
+input[type=text]:hover,input[type=search]:hover,input[type=password]:hover, input[type=number]:hover,input[type=date]:hover,select:hover,textarea:hover{
+  border-color:var(--line-hover);
+}
+input[type=text]:focus,input[type=search]:focus,input[type=password]:focus, input[type=number]:focus,input[type=date]:focus,select:focus,textarea:focus{
+  border-color:var(--accent);
+  box-shadow:var(--qd-focus);
+  outline:none;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+/* Badges: muted tints that stay readable in both themes. */
+.badge{background-color:var(--panel2);border-color:var(--line);color:var(--dim);font-weight:600;letter-spacing:.01em;}
+.badge.ok{color:#157347;background-color:var(--accent2-soft);border-color:var(--qd-ok-line);}
+.badge.s{color:var(--accent);background-color:var(--accent-soft);border-color:var(--qd-accent-line);}
+.badge.off{color:#475569;background-color:var(--panel3);border-color:var(--line-hover);}
+.badge.warn{color:#8a4a09;background-color:var(--warn-soft);border-color:var(--qd-warn-line);}
+.badge.bad{color:#b42318;background-color:var(--bad-soft);border-color:var(--qd-bad-line);}
+[data-theme="dark"] .badge.ok{color:#6ee7a8;background-color:var(--accent2-soft);border-color:var(--qd-ok-line);}
+[data-theme="dark"] .badge.s{color:#9cc2ff;background-color:var(--accent-soft);border-color:var(--qd-accent-line);}
+[data-theme="dark"] .badge.off{color:var(--dim);background-color:var(--panel3);border-color:var(--line);}
+[data-theme="dark"] .badge.warn{color:#f6c667;background-color:var(--warn-soft);border-color:var(--qd-warn-line);}
+[data-theme="dark"] .badge.bad{color:#ff9a92;background-color:var(--bad-soft);border-color:var(--qd-bad-line);}
+.realm-badge-intl{color:var(--accent);background-color:var(--accent-soft);border-color:var(--qd-accent-line);}
+.realm-badge-cn{color:var(--qd-cn);background-color:var(--qd-cn-soft);border-color:var(--qd-cn-line);}
+.badge-effort{color:var(--think);background-color:var(--think-soft);border-color:var(--qd-think-line);}
+
+/* China stays warm and distinct instead of reading as an error state. */
+.realm-card.active#tabCn{border-color:var(--qd-cn);box-shadow:0 0 0 3px var(--qd-cn-soft),var(--qd-shadow-2);}
+[data-theme="dark"] .realm-card.active#tabCn{background-color:var(--panel);}
+#activeGatewayName[style*="220, 38, 38"]{color:var(--qd-cn)!important;/* beats inline style */;}
+#cardGatewayCtrl[style*="220, 38, 38"]{
+  border-color:var(--qd-cn-line)!important; /* beats inline style */
+  background-color:var(--qd-cn-soft)!important; /* beats inline style */
+  /* beats inline style */;
+}
+
+/* Tables: tinted header, quiet separators, tabular numbers. */
+table th{background-color:var(--panel2);color:var(--dim);font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+table th,table td{border-color:var(--line);}
+table tbody tr:hover{background-color:var(--panel2);}
+table td.num,table td .mono{font-variant-numeric:tabular-nums;}
+
+/* Modals and menus: same depth language as the panels. */
+.modal{background-color:var(--panel);border-color:var(--line);box-shadow:var(--qd-shadow-3);}
+.modal-mask{background-color:var(--qd-mask);}
+.modal-hd,.modal-ft{border-color:var(--line);}
+.menu-pop,.theme-dropdown{background-color:var(--panel);border-color:var(--line);border-radius:var(--qd-radius);box-shadow:var(--qd-shadow-2);}
+.menu-pop button{color:var(--fg);}
+.menu-pop button:hover{background-color:var(--panel2);}
+
+/* Terminal log stays dark; only its chips are aligned with the palette. */
+.log-tag{color:#a8b3c4;background-color:rgba(148,163,184,.12);border-radius:4px;}
+.log-tag.tag-chat{color:#c4b5fd;background-color:rgba(139,92,246,.20);}
+.log-tag.tag-scheduler{color:#6ee7b7;background-color:rgba(16,185,129,.18);}
+.log-tag.tag-tasks{color:#fcd34d;background-color:rgba(234,179,8,.18);}
+.log-tag.tag-accounts{color:#7dd3fc;background-color:rgba(14,165,233,.18);}
+.log-tag.tag-auth{color:#fda4af;background-color:rgba(244,63,94,.18);}
+.log-tag.tag-system{color:#a8b3c4;background-color:rgba(100,116,139,.18);}
+.log-lvl{border-radius:4px;letter-spacing:.04em;}
+.log-lvl.lvl-INFO{color:#9cc2ff;background-color:rgba(59,130,246,.22);}
+.log-lvl.lvl-WARN{color:#fcd34d;background-color:rgba(217,119,6,.22);}
+.log-lvl.lvl-ERROR{color:#ff9a92;background-color:rgba(220,38,38,.24);}
+.log-lvl.lvl-DEBUG{color:#a8b3c4;background-color:rgba(148,163,184,.18);}
+
+/* Links, scrollbars and selection. */
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.login-link{color:var(--accent);background-color:var(--panel2);border-color:var(--line);}
+.login-link:hover{background-color:var(--panel);border-color:var(--accent);}
+html{scrollbar-width:thin;scrollbar-color:var(--panel3) transparent;}
+::-webkit-scrollbar-track{background-color:transparent;}
+::-webkit-scrollbar-thumb{background-color:var(--panel3);border-radius:999px;}
+::-webkit-scrollbar-thumb:hover{background-color:var(--line-hover);}
+::selection{background-color:var(--qd-select);color:var(--fg);}
+body{font-family:var(--font-ui);-webkit-font-smoothing:antialiased;}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.001ms;}
+}
